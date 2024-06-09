@@ -1,5 +1,27 @@
 const workoutService = require('../services/workoutService')
 
+/**
+ * @openapi
+ * /api/v1/workouts:
+ *   get:
+ *     tags:
+ *       - Workouts
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: "#/components/schemas/Workout"
+ */
 const getAllWorkouts = (req, res) => {
   const { mode } = req.query
   try {
@@ -140,5 +162,4 @@ module.exports = {
   createNewWorkout,
   updateOneWorkout,
   deleteOneWorkout,
-  getRecordsForWorkout,
 }

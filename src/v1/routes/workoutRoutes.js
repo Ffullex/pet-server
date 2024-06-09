@@ -11,6 +11,12 @@ const router = express.Router()
  *   get:
  *     tags:
  *       - Workouts
+ *     parameters:
+ *       - in: query
+ *         name: mode
+ *         schema:
+ *           type: string
+ *         description: The mode of a workout
  *     responses:
  *       200:
  *         description: OK
@@ -25,7 +31,23 @@ const router = express.Router()
  *                 data:
  *                   type: array
  *                   items:
- *                     type: object
+ *                     $ref: "#/components/schemas/Workout"
+ *       5XX:
+ *         description: FAILED
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: FAILED
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     error:
+ *                       type: string
+ *                       example: "Some error message"
  */
 router.get('/', workoutController.getAllWorkouts)
 
