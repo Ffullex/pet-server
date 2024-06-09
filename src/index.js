@@ -2,10 +2,20 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const v1WorkoutRouter = require('./v1/routes/workoutRoutes')
 const { swaggerDocs: V1SwaggerDocs} = require('./v1/swagger')
+const cors = require('cors')
+const postgreSql = require('pg')
+
+const corsOptions = {
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}
 
 const app = express()
 const PORT = process.env.PORT || 3000
 
+app.use(cors(corsOptions))
 app.use(bodyParser.json())
 app.use('/api/v1/workouts', v1WorkoutRouter)
 
@@ -15,57 +25,30 @@ app.listen(PORT, () => {
   V1SwaggerDocs(app, PORT)
 })
 
-// const cors = require('cors')
-// const corsOptions = {
-//   "origin": "*",
-//   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-//   "preflightContinue": false,
-//   "optionsSuccessStatus": 204
+// Подключение к БД
+const { Client } = postgreSql
+const client = new Client({
+  host: 'localhost',
+  port: 5433,
+  database: 'exampledb',
+  user: 'postgres',
+  password: 'asd123ASD',
+})
+
+// параметры для получения списка продуктов
+const getProducts = {
+  text: 'SELECT *  FROM  products',
+}
+
+// параметры для добавления продукта
+// const newProduct = {
+//   text: 'INSERT INTO products(image, name, price) VALUES($1, $2, $3)',
+//   values: ['example2', 'product2', 123],
 // }
 
-
-// app.use(express.json())
-//
-// app.use(function(error, request, response, next) {
-//   console.error(error.stack)
-//   response.status(500).send('Something is broken!')
-// })
-//
-//
-// app.get('/', cors(corsOptions),  (request, response) => {
-//   response.send('Hello World!') // отправка ответа
-// })
-//
-// app.post('/profile',cors(corsOptions), function (request, response, next) {
-//   console.log(request.body)
-//   response.status(201).json(request.body)
-//   next(new Error('Not found'))
-// })
-//
-// app.listen(port, () => {
-//   console.log(`Example app listening on port ${port}!`)
-// })
-
-// const pg = require('pg')
-// require('./server.js')
-
-// const { Client } = pg
-// const client = new Client({
-//   host: 'localhost',
-//   port: 5433,
-//   database: 'exampledb',
-//   user: 'postgres',
-//   password: 'asd123ASD',
-// })
-
-// const getTable = () => {
-//   const text = 'SELECT *  FROM  products'
-//     console.log(text)
-// }
-// getTable()
-// client.connect(async (err) => {
-//   const example = await client.query(newProduct)
-//   console.log(example)
-//   client.end()
-// })
+client.connect(async (err) => {
+  const example = await client.query(getProducts)
+  console.log(example)
+  client.end()
+})
 
