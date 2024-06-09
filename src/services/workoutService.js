@@ -22,12 +22,15 @@ const createNewWorkout = (newWorkout) => {
       timeZone: 'UTC',
     }),
   }
-  const createdWorkout = Workout.createNewWorkout(
-    workoutToInsert,
-  )
-  return createdWorkout
+  try {
+    const createdWorkout = Workout.createNewWorkout(
+      workoutToInsert,
+    )
+    return createdWorkout
+  } catch (error) {
+    throw error
+  }
 }
-
 const updateOneWorkout = (workoutId, changes) => {
   const updatedWorkout = Workout.updateOneWorkout(
     workoutId,
