@@ -21,8 +21,6 @@ app.use('/api/v1/workouts', v1WorkoutRouter)
 app.use('/api/v1/products', v1ProductRouter)
 
 app.listen(PORT, () => {
-  console.log(`API is listening on port ${ PORT }`)
-  /// *** ADD ***
   V1SwaggerDocs(app, PORT)
 })
 

@@ -2,10 +2,8 @@ const { v4: uuid } = require('uuid')
 const Product = require('../database/Product')
 
 async function getAllProducts() {
-  console.log(222)
   try {
     const example =  await Product.getAllProducts()
-    console.log(888, example)
     return example
   } catch (error) {
     throw error
