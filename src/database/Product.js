@@ -23,14 +23,32 @@ async function getAllProducts(){
 
 const createNewProduct = async(ProductToInsert) => {
   try {
-    const products = await CLIENT.connect(async () => {
-      const products =  await CLIENT.query({
-        text: `INSERT INTO products ${ProductToInsert}`,
-      })
-      return products.end
+    await CLIENT.connect()
+    await CLIENT.query({
+      text: `INSERT INTO products [productid,productname, price, rating, sellerid ] values [
+            ${ProductToInsert.productid},
+            ${ProductToInsert.productname},
+            ${ProductToInsert.price},
+            ${ProductToInsert.rating},
+            ${ProductToInsert.sellerid}
+          ]`,
     })
+    await CLIENT.end()
 
-    return products ? products.rows : new Error('БД недоступна')
+    return 'Ok'
+  } catch (error) {
+    return error
+  }
+}
+
+const deleteProduct = async(id) => {
+  try {
+    console.log(1111, id)
+    await CLIENT.connect()
+    await CLIENT.query({ text: `DELETE FROM products WHERE id=${id} LIMIT 1`})
+    await CLIENT.end()
+
+    return 'Ok'
   } catch (error) {
     return error
   }
@@ -39,4 +57,5 @@ const createNewProduct = async(ProductToInsert) => {
 module.exports = {
   getAllProducts,
   createNewProduct,
+  deleteProduct,
 }

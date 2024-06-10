@@ -22,18 +22,9 @@ const getOneProduct = (ProductId) => {
 const createNewProduct = (newProduct) => {
   const ProductToInsert = {
     ...newProduct,
-    id: uuid(),
-    createdAt: new Date().toLocaleString('en-US', {
-      timeZone: 'UTC',
-    }),
-    updatedAt: new Date().toLocaleString('en-US', {
-      timeZone: 'UTC',
-    }),
   }
   try {
-    const createdProduct = Product.createNewProduct(
-      ProductToInsert,
-    )
+    const createdProduct = Product.createNewProduct(ProductToInsert)
     return createdProduct
   } catch (error) {
     throw error
@@ -52,9 +43,9 @@ const updateOneProduct = (ProductId, changes) => {
   }
 }
 
-const deleteOneProduct = (ProductId) => {
+const deleteProduct = async (ProductId) => {
   try {
-    Product.deleteOneProduct(ProductId)
+    await Product.deleteProduct(ProductId)
   } catch (error) {
     throw error
   }
@@ -65,5 +56,5 @@ module.exports = {
   getOneProduct,
   createNewProduct,
   updateOneProduct,
-  deleteOneProduct,
+  deleteProduct,
 }

@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 
-const { swaggerDocs: V1SwaggerDocs} = require('./v1/swagger')
+const { swaggerDocs: V1SwaggerDocs } = require('./v1/swagger')
 const cors = require('cors')
 
 const v1WorkoutRouter = require('./v1/routes/workoutRoutes')
@@ -14,10 +14,10 @@ const v1PvzEmployeesRouter = require('./v1/routes/pvzEmployees')
 const v1SellerRouter = require('./v1/routes/sellerRoutes')
 
 const corsOptions = {
-  "origin": "*",
-  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-  "preflightContinue": false,
-  "optionsSuccessStatus": 204
+  'origin': '*',
+  'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  'preflightContinue': false,
+  'optionsSuccessStatus': 204,
 }
 
 const app = express()
